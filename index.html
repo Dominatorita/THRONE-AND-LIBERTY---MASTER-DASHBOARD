@@ -20,6 +20,8 @@ h1 { color: var(--gold); margin: 0; font-size: 22px; }
 /* Stile barra */
 .progress-bg { height: 4px; background: #000; margin-bottom: 8px; border-radius: 2px; }
 .progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s; }
+.link-item { color: var(--gold); text-decoration: none; display: block; padding: 8px; background: rgba(255,255,255,0.03); margin-bottom: 5px; border: 1px solid var(--border); transition: 0.2s; }
+.link-item:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); }    
 </style>
 </head>
 <body>
@@ -43,6 +45,13 @@ h1 { color: var(--gold); margin: 0; font-size: 22px; }
 <div class="progress-bg"><div id="pb-m" class="progress-fill"></div></div>
 <div id="list-m"></div>
 </div>
+<!-- Sezione Link Esterni -->
+<div style="margin-top: 20px;">
+    <div class="section-header"><span>🔗 UTILITY</span></div>
+    <a href="https://questlog.gg/throne-and-liberty/en/character-builder" target="_blank" class="link-item">📝 Questlog Builder</a>
+    <a href="https://docs.google.com/document/u/0/d/e/2PACX-1vRlGeaweu5UZXuTPmuN-PAs9VCuCjQzRNyF9VlN3lKZXbfXokKLnyizJh2I2di0Hw6Zg3ixyLXnMp1k/pub?pli=1" target="_blank" class="link-item">🧩 Evento Domande Muro</a>
+    <a href="https://help.playthroneandliberty.com/hc/en-us/articles/32875866637211-Known-Issues" target="_blank" class="link-item">⚠️ Problemi Noti</a>
+</div>    
 </div>
 <div>
 <div class="section-header"><span>🗓️ SETTIMANALE</span> <span id="count-w">0/0</span></div>
