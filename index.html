@@ -17,11 +17,10 @@ h1 { color: var(--gold); margin: 0; font-size: 22px; }
 .task.checked { opacity: 0.5; text-decoration: line-through; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .signature { position: absolute; bottom: 20px; right: 20px; font-size: 12px; color: var(--gold); opacity: 0.7; font-weight: bold; }
-/* Stile barra */
 .progress-bg { height: 4px; background: #000; margin-bottom: 8px; border-radius: 2px; }
 .progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s; }
 .link-item { color: var(--gold); text-decoration: none; display: block; padding: 8px; background: rgba(255,255,255,0.03); margin-bottom: 5px; border: 1px solid var(--border); transition: 0.2s; }
-.link-item:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); }    
+.link-item:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); }
 </style>
 </head>
 <body>
@@ -36,25 +35,25 @@ h1 { color: var(--gold); margin: 0; font-size: 22px; }
 <div class="grid">
 <div class="col-left">
 <div>
-<div class="section-header"><span>☀️ GIORNALIERO</span> <span id="count-d">0/0</span></div>
+<div class="section-header"><span id="title-d">☀️ GIORNALIERO</span> <span id="count-d">0/0</span></div>
 <div class="progress-bg"><div id="pb-d" class="progress-fill"></div></div>
 <div id="list-d"></div>
 </div>
 <div>
-<div class="section-header"><span>🌙 MENSILE</span> <span id="count-m">0/0</span></div>
+<div class="section-header"><span id="title-m">🌙 MENSILE</span> <span id="count-m">0/0</span></div>
 <div class="progress-bg"><div id="pb-m" class="progress-fill"></div></div>
 <div id="list-m"></div>
 </div>
-<!-- Sezione Link Esterni -->
-<div style="margin-top: 20px;">
-    <div class="section-header"><span>🔗 UTILITY</span></div>
-    <a href="https://questlog.gg/throne-and-liberty/en/character-builder" target="_blank" class="link-item">📝 Questlog Builder</a>
-    <a href="https://docs.google.com/document/u/0/d/e/2PACX-1vRlGeaweu5UZXuTPmuN-PAs9VCuCjQzRNyF9VlN3lKZXbfXokKLnyizJh2I2di0Hw6Zg3ixyLXnMp1k/pub?pli=1" target="_blank" class="link-item">🧩 Evento Domande Muro</a>
-    <a href="https://help.playthroneandliberty.com/hc/en-us/articles/32875866637211-Known-Issues" target="_blank" class="link-item">⚠️ Problemi Noti</a>
-</div>    
+<div>
+<div class="section-header"><span id="title-u">🔗 UTILITY</span></div>
+<a href="https://questlog.gg/throne-and-liberty/en/character-builder" target="_blank" class="link-item">📝 Questlog Builder</a>
+<a href="https://docs.google.com/document/u/0/d/e/2PACX-1vRlGeaweu5UZXuTPmuN-PAs9VCuCjQzRNyF9VlN3lKZXbfXokKLnyizJh2I2di0Hw6Zg3ixyLXnMp1k/pub?pli=1" target="_blank" class="link-item">🧩 Evento Domande Muro</a>
+<a href="https://help.playthroneandliberty.com/hc/en-us/articles/32875866637211-Known-Issues" target="_blank" class="link-item">⚠️ Problemi Noti</a>
+<a href="https://www.playthroneandliberty.com/en-us/news" target="_blank" class="link-item">📰 News</a>
+</div>
 </div>
 <div>
-<div class="section-header"><span>🗓️ SETTIMANALE</span> <span id="count-w">0/0</span></div>
+<div class="section-header"><span id="title-w">🗓️ SETTIMANALE</span> <span id="count-w">0/0</span></div>
 <div class="progress-bg"><div id="pb-w" class="progress-fill"></div></div>
 <div id="list-w" class="grid-2"></div>
 </div>
@@ -63,10 +62,23 @@ h1 { color: var(--gold); margin: 0; font-size: 22px; }
 </div>
 <script>
 let lang = 'IT';
+const uiTexts = {
+    IT: { d: "☀️ GIORNALIERO", m: "🌙 MENSILE", w: "🗓️ SETTIMANALE", u: "🔗 UTILITY" },
+    EN: { d: "☀️ DAILY", m: "🌙 MONTHLY", w: "🗓️ WEEKLY", u: "🔗 UTILITY" }
+};
 const db = {
-d: { IT: ["Comprare Stellarite Talandre", "Comprare contratti e pietre", "Fare Missioni medaglie", "Completa 10 contratti a nix", "Completa 2 Contratti Flames", "Dungeon Elite e Epic", "Solo dungeon nix", "Missioni evento nix (opzionale)"], EN: ["Buy Talandre Stellarite", "Buy contracts & stones", "Do Medallion missions", "Complete 10 Nix contracts", "Complete 2 Flames contracts", "Elite & Epic Dungeons", "Solo Nix dungeon", "Nix event missions (optional)"] },
-w: { IT: ["Raid Normal", "Raid Hard", "Raid Nightmare (boss finale)", "Scarico punti Nix", "Hall of illusion", "Trial (punti completamento)", "Trial Golden chest", "Battleground 800 punti", "Battleground 10 win", "Comprare libri Piccioni", "Comprare chiavi Contratti", "Comprare negozio Battleground", "Evento 1", "Contratti mastery torre", "Evento 2", "5 chiavi", "7 Eventi"], EN: ["Raid Normal", "Raid Hard", "Raid Nightmare (final boss)", "Nix points dump", "Hall of illusion", "Trial (completion points)", "Trial Golden chest", "Battleground 800 points", "Battleground 10 wins", "Buy Pigeon books", "Buy Contract tokens", "Buy Battleground shop", "Event 1", "Tower mastery contracts", "Event 2", "5 keys", "7 Events"] },
-m: { IT: ["Torre", "Evento extra 1", "Evento extra 2"], EN: ["Tower", "Extra event 1", "Extra event 2"] }
+    d: { 
+        IT: ["Comprare Stellarite Talandre", "Comprare contratti e pietre", "Fare Missioni medaglie", "Completa 10 contratti a nix", "Completa 2 Contratti Flames", "Dungeon Elite e Epic", "Solo dungeon nix", "Missioni evento nix (opzionale)", "Comprare Negozio gilda", "Comprare Negozio Cucina"], 
+        EN: ["Buy Talandre Stellarite", "Buy contracts & stones", "Do Medallion missions", "Complete 10 Nix contracts", "Complete 2 Flames contracts", "Elite & Epic Dungeons", "Solo Nix dungeon", "Nix event missions (optional)", "Buy Guild Shop", "Buy Cooking Shop"] 
+    },
+    w: { 
+        IT: ["Raid Normal", "Raid Hard", "Raid Nightmare (boss finale)", "Scarico punti Nix", "Hall of illusion", "Trial (punti completamento)", "Trial Golden chest", "Battleground 800 punti", "Battleground 10 win", "Comprare libri Piccioni", "Comprare chiavi Contratti", "Comprare negozio Battleground", "Evento 1", "Contratti mastery torre", "Evento 2", "5 chiavi", "7 Eventi", "Comprare Negozio Gilda", "Comprare Negozio Raid"], 
+        EN: ["Raid Normal", "Raid Hard", "Raid Nightmare (final boss)", "Nix points dump", "Hall of illusion", "Trial (completion points)", "Trial Golden chest", "Battleground 800 points", "Battleground 10 wins", "Buy Pigeon books", "Buy Contract tokens", "Buy Battleground shop", "Event 1", "Tower mastery contracts", "Event 2", "5 keys", "7 Events", "Buy Guild Shop", "Buy Raid Shop"] 
+    },
+    m: { 
+        IT: ["Torre", "Evento extra 1", "Evento extra 2"], 
+        EN: ["Tower", "Extra event 1", "Extra event 2"] 
+    }
 };
 let state = JSON.parse(localStorage.getItem("tl_state") || "{}");
 
@@ -76,19 +88,26 @@ function checkAndReset() {
     const referenceDate = new Date(now);
     if (currentHour < 4) referenceDate.setDate(now.getDate() - 1);
     const todayStr = referenceDate.toDateString();
+    
     if (localStorage.getItem("lastResetDate") !== todayStr) {
         Object.keys(state).forEach(k => { if(k.startsWith('d') || k.startsWith('m')) delete state[k]; });
-        if (referenceDate.getDay() === 4) {
-            Object.keys(state).forEach(k => { if(k.startsWith('w')) delete state[k]; });
-        }
         localStorage.setItem("lastResetDate", todayStr);
         localStorage.setItem("tl_state", JSON.stringify(state));
     }
 }
 
-function toggleLang() { lang = (lang === 'IT' ? 'EN' : 'IT'); render(); }
+function toggleLang() { 
+    lang = (lang === 'IT' ? 'EN' : 'IT'); 
+    render(); 
+}
 
 function render() {
+    // Aggiorna i testi delle intestazioni in base alla lingua
+    document.getElementById('title-d').innerText = uiTexts[lang].d;
+    document.getElementById('title-m').innerText = uiTexts[lang].m;
+    document.getElementById('title-w').innerText = uiTexts[lang].w;
+    document.getElementById('title-u').innerText = uiTexts[lang].u;
+
     ['d','w','m'].forEach(cat => {
         const list = document.getElementById('list-' + cat);
         list.innerHTML = "";
@@ -103,17 +122,40 @@ function render() {
         const total = db[cat][lang].length;
         const done = db[cat][lang].filter((_, i) => state[cat + i]).length;
         document.getElementById('count-' + cat).innerText = done + "/" + total;
-        document.getElementById('pb-' + cat).style.width = (done / total * 100) + "%";
+        document.getElementById('pb-' + cat).style.width = (total > 0 ? (done / total * 100) : 0) + "%";
     });
 }
 
 setInterval(() => {
-    const n = new Date();
-    const r = (t) => t.setHours(4,0,0,0) || t;
-    const d = r(new Date(n > r(new Date()) ? new Date().setDate(n.getDate()+1) : new Date()));
-    const w = new Date(); w.setDate(w.getDate() + (4 - w.getDay() + 7) % 7); r(w);
-    const f = (ms) => `${Math.floor(ms/3600000)}h ${Math.floor((ms%3600000)/60000)}m ${Math.floor((ms%60000)/1000)}s`;
-    document.getElementById("timers").innerText = `⏳ RESET GIORNALIERO: ${f(d-n)} | RESET SETTIMANALE (GIOVEDÌ): ${f(w-n)}`;
+    const now = new Date();
+    
+    // Calcolo Reset Giornaliero (prossime ore 04:00)
+    let nextDaily = new Date(now);
+    nextDaily.setHours(4, 0, 0, 0);
+    if (now >= nextDaily) {
+        nextDaily.setDate(nextDaily.getDate() + 1);
+    }
+    
+    // Calcolo Reset Settimanale (Prossimo Giovedì ore 04:00)
+    let nextWeekly = new Date(now);
+    nextWeekly.setHours(4, 0, 0, 0);
+    let day = nextWeekly.getDay();
+    let daysUntilThursday = (4 - day + 7) % 7;
+    if (daysUntilThursday === 0 && now >= nextWeekly) {
+        daysUntilThursday = 7;
+    }
+    nextWeekly.setDate(nextWeekly.getDate() + daysUntilThursday);
+
+    const f = (ms) => {
+        const s = Math.floor(ms / 1000);
+        const days = Math.floor(s / 86400);
+        const hours = Math.floor((s % 86400) / 3600);
+        const mins = Math.floor((s % 3600) / 60);
+        const secs = s % 60;
+        return days > 0 ? `${days}g ${hours}h ${mins}m ${secs}s` : `${hours}h ${mins}m ${secs}s`;
+    };
+
+    document.getElementById("timers").innerText = `⏳ RESET GIORNALIERO: ${f(nextDaily - now)} | RESET SETTIMANALE (GIOVEDÌ): ${f(nextWeekly - now)}`;
 }, 1000);
 
 checkAndReset();
